@@ -112,20 +112,19 @@ class Creature:
     def __str__(self):
         return str(self.nom)+" | "+str(self.position)
 
+from time import sleep
+
+# Création de la partie
 
 crea1 = Creature("Dragon",Case(4,4))
-crea2 = Creature("Phoenix",Case(0,0))
+crea2 = Creature("Cerbère",Case(0,0))
 listeDesCreatures = [crea1, crea2]
 listeDesCases = [Case(x,y) for x in range(4) for y in range(4)]
 
 jeu = Jeu(listeDesCases, listeDesCreatures, 1, crea1)
 
+# Boucle de la partie : affiche le plateau, choisi la cible pour la créature active et déplace cette-dernière
 i=0
-
-compteur = 1
-
-from time import sleep
-
 while jeu.tour != 0:
     sleep(0.5)
     jeu.plateau()
