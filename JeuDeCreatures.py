@@ -7,7 +7,7 @@ class Case:
         self.y=y
 
     def adjacentes(self,jeu):
-        # Retourne les cases de la liste des cases dont la distance est inférieure à 2 à la case courante
+        # Retourne les cases de la liste des cases dont la distance**2 est inférieure ou égale à 2 à la case courante
         return [c for c in jeu.listeDesCases if 0 < (c.x-self.x)**2+(c.y-self.y)**2 <= 2]
         
 
@@ -23,6 +23,7 @@ class Jeu:
         self.listeDesCreatures=listeDesCreatures
         self.tour=tour
         self.actif=actif
+        print("########## DÉBUT DU JEU ##########")
 
     def estOccupee(self,case):
         for creature in self.listeDesCreatures:
@@ -33,25 +34,45 @@ class Jeu:
 
 
     def deplacer(self,creature,case):
-        if self.actif == creature : 
-            print("C'est bien à vous de jouer")
-            listeAdjacentes = case.adjacentes(self)
-            for i in listeAdjacentes: print(i)
-            if case in listeAdjacentes:
-                print("La case est bien adjacente")
-                creature.x = case.x
-                creature.y = case.y
-                if self.estOccupee(case):
-                    print("Vainqueur : ", creature.nom)
-                else: 
-                    self.tour += 1
-                    self.actif = listeDesCreatures[listeDesCreatures.index(creature)+1]
-                    print("Tour :", self.tour)
-                    print("Actif :", self.actif)
+        print("_____ DEPLACEMENT ______")
+        print("Tour :", self.tour)
+        print("C'est à", self.actif, "de jouer")
+        if self.actif == creature :
+            listeAdjacentes = creature.position.adjacentes(self)
+
+            for c in listeAdjacentes :
+                if c.x == case.x and c.y == case.y:
+                    print("La case est bien adjacente")
+
+                    print("La case est occupée ?",self.estOccupee(case))
+                    if self.estOccupee(case):
+                        print("### Vainqueur :", creature.nom)
+                        self.tour = 0
+                    else:
+                        creature.position.x = case.x
+                        creature.position.y = case.y
+                        self.actif = listeDesCreatures[self.tour%2]
+                        self.tour += 1
+                        print("\n")
+                    break
+
             return None
         else :
             print("Ce n'est pas à vous de jouer")
             return None
+
+    def plateau(self):
+        i=0
+        for x in range(int(len(self.listeDesCases)**(1/2))):
+            print("|",end="")
+            for y in range(int(len(self.listeDesCases)**(1/2))):
+                if self.estOccupee(self.listeDesCases[i]):
+                    print(" X |",end="")
+                else:
+                    print(" _ |",end="")
+                i+=1
+            print()
+        print()
 
     def __str__(self):
         s = str(self.listeDesCases)+"\n"+str(self.listeDesCreatures)+"\n"+str(self.tour)+str(self.actif)
@@ -64,28 +85,39 @@ class Creature:
         self.position=position
 
     def choisirCible(self,jeu):
+        print("___ CHOIX DE LA CIBLE ___")
         listeAdjacentes = self.position.adjacentes(jeu)
         # for i in listeAdjacentes: print(i)
         for c in listeAdjacentes:
             if jeu.estOccupee(c) :
-                print("Target acquired")
+                print("Cible occupée ", c)
                 print(c)
                 return c
-        return choice(listeAdjacentes)
+
+        cible = choice(listeAdjacentes)
+        print("Cible aléatoire ", cible)
+        return cible
 
     def __str__(self):
         return str(self.nom)+" | "+str(self.position)
 
-print("______ LANCEMENT ______")
 
-crea1 = Creature("Dragon",Case(0,0))
-crea2 = Creature("Phoenix",Case(1,1))
+crea1 = Creature("Dragon",Case(4,4))
+crea2 = Creature("Phoenix",Case(0,0))
 listeDesCreatures = [crea1, crea2]
 listeDesCases = [Case(x,y) for x in range(4) for y in range(4)]
 
 jeu = Jeu(listeDesCases, listeDesCreatures, 1, crea1)
 
-cc = crea1.choisirCible(jeu)
+i=0
 
-jeu.deplacer(crea1,Case(1,1))
-print(crea1.position)
+compteur = 1
+
+from time import sleep
+
+while jeu.tour != 0:
+    sleep(0.5)
+    jeu.plateau()
+    cible = listeDesCreatures[i%2].choisirCible(jeu)
+    jeu.deplacer(listeDesCreatures[i%2],cible)
+    i+=1
