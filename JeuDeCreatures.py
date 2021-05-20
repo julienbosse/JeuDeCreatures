@@ -46,7 +46,15 @@ class Jeu:
 
                     print("La case est occupée ?",self.estOccupee(case))
                     if self.estOccupee(case):
-                        print("### Vainqueur :", creature.nom)
+                        creature.position.x = case.x
+                        creature.position.y = case.y
+                        print()
+                        print()
+                        self.plateau()
+                        print()
+                        print("################################")
+                        print("  ### Vainqueur : "+ creature.nom + " ###")
+                        print("################################")
                         self.tour = 0
                     else:
                         creature.position.x = case.x
@@ -67,7 +75,10 @@ class Jeu:
             print("|",end="")
             for y in range(int(len(self.listeDesCases)**(1/2))):
                 if self.estOccupee(self.listeDesCases[i]):
-                    print(" X |",end="")
+                    if self.listeDesCases[i].x == listeDesCreatures[0].position.x and self.listeDesCases[i].y == listeDesCreatures[0].position.y:
+                        print(" "+listeDesCreatures[0].nom[0]+" |",end="")
+                    else:
+                        print(" "+listeDesCreatures[1].nom[0]+" |",end="")
                 else:
                     print(" _ |",end="")
                 i+=1
@@ -121,3 +132,4 @@ while jeu.tour != 0:
     cible = listeDesCreatures[i%2].choisirCible(jeu)
     jeu.deplacer(listeDesCreatures[i%2],cible)
     i+=1
+
