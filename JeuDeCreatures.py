@@ -115,8 +115,8 @@ class Creature:
 from time import sleep
 
 # Création de la partie
-xmax=6
-ymax=6
+xmax=4
+ymax=4
 
 crea1 = Creature("Garurumon",Case(xmax,ymax))
 crea2 = Creature("Dreymon",Case(0,0))
