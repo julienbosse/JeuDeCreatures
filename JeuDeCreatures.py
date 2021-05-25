@@ -115,11 +115,13 @@ class Creature:
 from time import sleep
 
 # Création de la partie
+xmax=6
+ymax=6
 
-crea1 = Creature("Garurumon",Case(4,4))
+crea1 = Creature("Garurumon",Case(xmax,ymax))
 crea2 = Creature("Dreymon",Case(0,0))
 listeDesCreatures = [crea1, crea2]
-listeDesCases = [Case(x,y) for x in range(4) for y in range(4)]
+listeDesCases = [Case(x,y) for x in range(xmax) for y in range(ymax)]
 
 jeu = Jeu(listeDesCases, listeDesCreatures, 1, crea1)
 
