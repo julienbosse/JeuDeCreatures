@@ -1,4 +1,5 @@
 from random import choice
+from time import sleep
 
 class Case:
 
@@ -102,9 +103,9 @@ class Jeu:
         s = str(self.listeDesCases)+"\n"+str(self.listeDesCreatures)+"\n"+str(self.tour)+str(self.actif)
         return s
 
-from time import sleep
 
-# Création de la partie
+################## Création de la partie ###################
+
 xmax=8
 ymax=8
 
