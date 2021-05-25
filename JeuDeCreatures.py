@@ -116,8 +116,8 @@ from time import sleep
 
 # Création de la partie
 
-crea1 = Creature("Dragon",Case(4,4))
-crea2 = Creature("Cerbère",Case(0,0))
+crea1 = Creature("Garurumon",Case(4,4))
+crea2 = Creature("Dreymon",Case(0,0))
 listeDesCreatures = [crea1, crea2]
 listeDesCases = [Case(x,y) for x in range(4) for y in range(4)]
 
