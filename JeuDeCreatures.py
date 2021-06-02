@@ -109,12 +109,12 @@ class Jeu:
 xmax=8
 ymax=8
 
-crea1 = Creature("Garurumon",Case(xmax,ymax))
+crea1 = Creature("Garurumon",Case(xmax, ymax))
 crea2 = Creature("Dreymon",Case(0,0))
-crea3 = Creature("MetalGreymon", Case(0,ymax))
+crea3 = Creature("MetalGreymon", Case(0, ymax))
 listeDesCreatures = [crea1, crea2, crea3]
 
-listeDesCases = [Case(x,y) for x in range(xmax) for y in range(ymax)]
+listeDesCases = [Case(x, y) for x in range(xmax) for y in range(ymax)]
 
 jeu = Jeu(listeDesCases, listeDesCreatures)
 
